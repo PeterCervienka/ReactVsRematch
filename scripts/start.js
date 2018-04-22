@@ -1,24 +1,24 @@
 process.env.NODE_ENV = 'development';
 
-// Load environment variables from .env file. Suppress warnings using silent
-// if this file is missing. dotenv will never modify any environment variables
+// Load environment letiables from .env file. Suppress warnings using silent
+// if this file is missing. dotenv will never modify any environment letiables
 // that have already been set.
 // https://github.com/motdotla/dotenv
 require('dotenv').config({silent: true});
 
-var chalk = require('chalk');
-var webpack = require('webpack');
-var WebpackDevServer = require('webpack-dev-server');
-var historyApiFallback = require('connect-history-api-fallback');
-var httpProxyMiddleware = require('http-proxy-middleware');
-var detect = require('detect-port');
-var clearConsole = require('react-dev-utils/clearConsole');
-var checkRequiredFiles = require('react-dev-utils/checkRequiredFiles');
-var formatWebpackMessages = require('react-dev-utils/formatWebpackMessages');
-var openBrowser = require('react-dev-utils/openBrowser');
-var prompt = require('react-dev-utils/prompt');
-var config = require('../config/webpack.config.dev');
-var paths = require('../config/paths');
+let chalk = require('chalk');
+let webpack = require('webpack');
+let WebpackDevServer = require('webpack-dev-server');
+let historyApiFallback = require('connect-history-api-fallback');
+let httpProxyMiddleware = require('http-proxy-middleware');
+let detect = require('detect-port');
+let clearConsole = require('react-dev-utils/clearConsole');
+let checkRequiredFiles = require('react-dev-utils/checkRequiredFiles');
+let formatWebpackMessages = require('react-dev-utils/formatWebpackMessages');
+let openBrowser = require('react-dev-utils/openBrowser');
+let prompt = require('react-dev-utils/prompt');
+let config = require('../config/webpack.config.dev');
+let paths = require('../config/paths');
 
 // Warn and crash if required files are missing
 if (!checkRequiredFiles([paths.appHtml, paths.appIndexJs])) {
@@ -26,13 +26,13 @@ if (!checkRequiredFiles([paths.appHtml, paths.appIndexJs])) {
 }
 
 // Tools like Cloud9 rely on this.
-var DEFAULT_PORT = process.env.PORT || 3000;
-var compiler;
-var handleCompile;
+let DEFAULT_PORT = process.env.PORT || 3000;
+let compiler;
+let handleCompile;
 
 // You can safely remove this after ejecting.
 // We only use this block for testing of Create React App itself:
-var isSmokeTest = process.argv.some(arg => arg.indexOf('--smoke-test') > -1);
+let isSmokeTest = process.argv.some(arg => arg.indexOf('--smoke-test') > -1);
 if (isSmokeTest) {
   handleCompile = function (err, stats) {
     if (err || stats.hasErrors() || stats.hasWarnings()) {
@@ -65,7 +65,7 @@ function setupCompiler(host, port, protocol) {
     // We have switched off the default Webpack output in WebpackDevServer
     // options so we are going to "massage" the warnings and errors and present
     // them in a readable focused way.
-    var messages = formatWebpackMessages(stats.toJson({}, true));
+    let messages = formatWebpackMessages(stats.toJson({}, true));
     if (!messages.errors.length && !messages.warnings.length) {
       console.log(chalk.green('Compiled successfully!'));
       console.log();
@@ -109,7 +109,7 @@ function setupCompiler(host, port, protocol) {
 // It allows us to log custom error messages on the console.
 function onProxyError(proxy) {
   return function(err, req, res){
-    var host = req.headers && req.headers.host;
+    let host = req.headers && req.headers.host;
     console.log(
       chalk.red('Proxy error:') + ' Could not proxy request ' + chalk.cyan(req.url) +
       ' from ' + chalk.cyan(host) + ' to ' + chalk.cyan(proxy) + '.'
@@ -134,7 +134,7 @@ function onProxyError(proxy) {
 function addMiddleware(devServer) {
   // `proxy` lets you to specify a fallback server during development.
   // Every unrecognized request will be forwarded to it.
-  var proxy = require(paths.appPackageJson).proxy;
+  let proxy = require(paths.appPackageJson).proxy;
   devServer.use(historyApiFallback({
     // Paths with dots should still use the history fallback.
     // See https://github.com/facebookincubator/create-react-app/issues/387.
@@ -164,7 +164,7 @@ function addMiddleware(devServer) {
     // - /*.hot-update.json (WebpackDevServer uses this too for hot reloading)
     // - /sockjs-node/* (WebpackDevServer uses this for hot reloading)
     // Tip: use https://jex.im/regulex/ to visualize the regex
-    var mayProxy = /^(?!\/(index\.html$|.*\.hot-update\.json$|sockjs-node\/)).*$/;
+    let mayProxy = /^(?!\/(index\.html$|.*\.hot-update\.json$|sockjs-node\/)).*$/;
     devServer.use(mayProxy,
       // Pass the scope regex both to Express and to the middleware for proxying
       // of both HTTP and WebSockets to work without false positives.
@@ -183,7 +183,7 @@ function addMiddleware(devServer) {
 }
 
 function runDevServer(host, port, protocol) {
-  var devServer = new WebpackDevServer(compiler, {
+  let devServer = new WebpackDevServer(compiler, {
     // Silence WebpackDevServer's own logs since they're generally not useful.
     // It will still show compile warnings and errors with this setting.
     clientLogLevel: 'none',
@@ -219,7 +219,7 @@ function runDevServer(host, port, protocol) {
     watchOptions: {
       ignored: /node_modules/
     },
-    // Enable HTTPS if the HTTPS environment variable is set to 'true'
+    // Enable HTTPS if the HTTPS environment letiable is set to 'true'
     https: protocol === "https",
     host: host
   });
@@ -228,7 +228,7 @@ function runDevServer(host, port, protocol) {
   addMiddleware(devServer);
 
   // Launch WebpackDevServer.
-  devServer.listen(port, (err, result) => {
+  devServer.listen(port, (err) => {
     if (err) {
       return console.log(err);
     }
@@ -241,8 +241,8 @@ function runDevServer(host, port, protocol) {
 }
 
 function run(port) {
-  var protocol = process.env.HTTPS === 'true' ? "https" : "http";
-  var host = process.env.HOST || 'localhost';
+  let protocol = process.env.HTTPS === 'true' ? "https" : "http";
+  let host = process.env.HOST || 'localhost';
   setupCompiler(host, port, protocol);
   runDevServer(host, port, protocol);
 }
@@ -256,7 +256,7 @@ detect(DEFAULT_PORT).then(port => {
   }
 
   clearConsole();
-  var question =
+  let question =
     chalk.yellow('Something is already running on port ' + DEFAULT_PORT + '.') +
     '\n\nWould you like to run the app on another port instead?';
 

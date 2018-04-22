@@ -1,15 +1,15 @@
-var autoprefixer = require('autoprefixer');
-var webpack = require('webpack');
-var HtmlWebpackPlugin = require('html-webpack-plugin');
-var ExtractTextPlugin = require('extract-text-webpack-plugin');
-var ManifestPlugin = require('webpack-manifest-plugin');
-var InterpolateHtmlPlugin = require('react-dev-utils/InterpolateHtmlPlugin');
-var url = require('url');
-var paths = require('./paths');
-var getClientEnvironment = require('./env');
+let autoprefixer = require('autoprefixer');
+let webpack = require('webpack');
+let HtmlWebpackPlugin = require('html-webpack-plugin');
+let ExtractTextPlugin = require('extract-text-webpack-plugin');
+let ManifestPlugin = require('webpack-manifest-plugin');
+let InterpolateHtmlPlugin = require('react-dev-utils/InterpolateHtmlPlugin');
+let url = require('url');
+let paths = require('./paths');
+let getClientEnvironment = require('./env');
 
 function ensureSlash(path, needsSlash) {
-  var hasSlash = path.endsWith('/');
+  let hasSlash = path.endsWith('/');
   if (hasSlash && !needsSlash) {
     return path.substr(path, path.length - 1);
   } else if (!hasSlash && needsSlash) {
@@ -24,20 +24,20 @@ function ensureSlash(path, needsSlash) {
 // single-page apps that may serve index.html for nested URLs like /todos/42.
 // We can't use a relative path in HTML because we don't want to load something
 // like /todos/42/static/js/bundle.7289d.js. We have to know the root.
-var homepagePath = require(paths.appPackageJson).homepage;
-var homepagePathname = homepagePath ? url.parse(homepagePath).pathname : '/';
+let homepagePath = require(paths.appPackageJson).homepage;
+let homepagePathname = homepagePath ? url.parse(homepagePath).pathname : '/';
 // Webpack uses `publicPath` to determine where the app is being served from.
 // It requires a trailing slash, or the file assets will get an incorrect path.
-var publicPath = ensureSlash(homepagePathname, true);
+let publicPath = ensureSlash(homepagePathname, true);
 // Some apps do not use client-side routing with pushState.
 // For these, "homepage" can be set to "." to enable relative asset paths.
 const shouldUseRelativeAssetPaths = publicPath === './';
 // `publicUrl` is just like `publicPath`, but we will provide it to our app
 // as %PUBLIC_URL% in `index.html` and `process.env.PUBLIC_URL` in JavaScript.
 // Omit trailing slash as %PUBLIC_PATH%/xyz looks better than %PUBLIC_PATH%xyz.
-var publicUrl = ensureSlash(homepagePathname, false);
-// Get environment variables to inject into our app.
-var env = getClientEnvironment(publicUrl);
+let publicUrl = ensureSlash(homepagePathname, false);
+// Get environment letiables to inject into our app.
+let env = getClientEnvironment(publicUrl);
 
 // Note: defined here because it will be used more than once.
 const cssFilename = 'static/css/[name].[contenthash:8].css';
@@ -194,7 +194,7 @@ module.exports = {
         minifyURLs: true
       }
     }),
-    // Makes some environment variables available to the JS code, for example:
+    // Makes some environment letiables available to the JS code, for example:
     // if (process.env.NODE_ENV === 'production') { ... }. See `./env.js`.
     // It is absolutely essential that NODE_ENV was set to production here.
     // Otherwise React will be compiled in the very slow development mode.

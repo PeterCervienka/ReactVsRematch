@@ -1,10 +1,10 @@
-// Grab NODE_ENV and REACT_APP_* environment variables and prepare them to be
+// Grab NODE_ENV and REACT_APP_* environment letiables and prepare them to be
 // injected into the application via DefinePlugin in Webpack configuration.
 
-var REACT_APP = /^REACT_APP_/i;
+let REACT_APP = /^REACT_APP_/i;
 
 function getClientEnvironment(publicUrl) {
-  var processEnv = Object
+  let processEnv = Object
     .keys(process.env)
     .filter(key => REACT_APP.test(key))
     .reduce((env, key) => {

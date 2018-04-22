@@ -1,24 +1,24 @@
 // Do this as the first thing so that any code reading it knows the right env.
 process.env.NODE_ENV = 'production';
 
-// Load environment variables from .env file. Suppress warnings using silent
-// if this file is missing. dotenv will never modify any environment variables
+// Load environment letiables from .env file. Suppress warnings using silent
+// if this file is missing. dotenv will never modify any environment letiables
 // that have already been set.
 // https://github.com/motdotla/dotenv
 require('dotenv').config({silent: true});
 
-var chalk = require('chalk');
-var fs = require('fs-extra');
-var path = require('path');
-var filesize = require('filesize');
-var gzipSize = require('gzip-size').sync;
-var rimrafSync = require('rimraf').sync;
-var webpack = require('webpack');
-var config = require('../config/webpack.config.prod');
-var paths = require('../config/paths');
-var checkRequiredFiles = require('react-dev-utils/checkRequiredFiles');
-var recursive = require('recursive-readdir');
-var stripAnsi = require('strip-ansi');
+let chalk = require('chalk');
+let fs = require('fs-extra');
+let path = require('path');
+let filesize = require('filesize');
+let gzipSize = require('gzip-size').sync;
+let rimrafSync = require('rimraf').sync;
+let webpack = require('webpack');
+let config = require('../config/webpack.config.prod');
+let paths = require('../config/paths');
+let checkRequiredFiles = require('react-dev-utils/checkRequiredFiles');
+let recursive = require('recursive-readdir');
+let stripAnsi = require('strip-ansi');
 
 // Warn and crash if required files are missing
 if (!checkRequiredFiles([paths.appHtml, paths.appIndexJs])) {
@@ -36,9 +36,9 @@ function removeFileNameHash(fileName) {
 // Input: 1024, 2048
 // Output: "(+1 KB)"
 function getDifferenceLabel(currentSize, previousSize) {
-  var FIFTY_KILOBYTES = 1024 * 50;
-  var difference = currentSize - previousSize;
-  var fileSize = !Number.isNaN(difference) ? filesize(difference) : 0;
+  let FIFTY_KILOBYTES = 1024 * 50;
+  let difference = currentSize - previousSize;
+  let fileSize = !Number.isNaN(difference) ? filesize(difference) : 0;
   if (difference >= FIFTY_KILOBYTES) {
     return chalk.red('+' + fileSize);
   } else if (difference < FIFTY_KILOBYTES && difference > 0) {
@@ -53,11 +53,11 @@ function getDifferenceLabel(currentSize, previousSize) {
 // First, read the current file sizes in build directory.
 // This lets us display how much they changed later.
 recursive(paths.appBuild, (err, fileNames) => {
-  var previousSizeMap = (fileNames || [])
+  let previousSizeMap = (fileNames || [])
     .filter(fileName => /\.(js|css)$/.test(fileName))
     .reduce((memo, fileName) => {
-      var contents = fs.readFileSync(fileName);
-      var key = removeFileNameHash(fileName);
+      let contents = fs.readFileSync(fileName);
+      let key = removeFileNameHash(fileName);
       memo[key] = gzipSize(contents);
       return memo;
     }, {});
@@ -75,13 +75,13 @@ recursive(paths.appBuild, (err, fileNames) => {
 
 // Print a detailed summary of build files.
 function printFileSizes(stats, previousSizeMap) {
-  var assets = stats.toJson().assets
+  let assets = stats.toJson().assets
     .filter(asset => /\.(js|css)$/.test(asset.name))
     .map(asset => {
-      var fileContents = fs.readFileSync(paths.appBuild + '/' + asset.name);
-      var size = gzipSize(fileContents);
-      var previousSize = previousSizeMap[removeFileNameHash(asset.name)];
-      var difference = getDifferenceLabel(size, previousSize);
+      let fileContents = fs.readFileSync(paths.appBuild + '/' + asset.name);
+      let size = gzipSize(fileContents);
+      let previousSize = previousSizeMap[removeFileNameHash(asset.name)];
+      let difference = getDifferenceLabel(size, previousSize);
       return {
         folder: path.join('build', path.dirname(asset.name)),
         name: path.basename(asset.name),
@@ -90,15 +90,14 @@ function printFileSizes(stats, previousSizeMap) {
       };
     });
   assets.sort((a, b) => b.size - a.size);
-  var longestSizeLabelLength = Math.max.apply(null,
+  let longestSizeLabelLength = Math.max.apply(null,
     assets.map(a => stripAnsi(a.sizeLabel).length)
   );
   assets.forEach(asset => {
-    var sizeLabel = asset.sizeLabel;
-    var sizeLength = stripAnsi(sizeLabel).length;
+    let sizeLabel = asset.sizeLabel;
+    let sizeLength = stripAnsi(sizeLabel).length;
     if (sizeLength < longestSizeLabelLength) {
-      var rightPadding = ' '.repeat(longestSizeLabelLength - sizeLength);
-      sizeLabel += rightPadding;
+      sizeLabel += ' '.repeat(longestSizeLabelLength - sizeLength);
     }
     console.log(
       '  ' + sizeLabel +
@@ -139,9 +138,9 @@ function build(previousSizeMap) {
     printFileSizes(stats, previousSizeMap);
     console.log();
 
-    var openCommand = process.platform === 'win32' ? 'start' : 'open';
-    var homepagePath = require(paths.appPackageJson).homepage;
-    var publicPath = config.output.publicPath;
+    let openCommand = process.platform === 'win32' ? 'start' : 'open';
+    let homepagePath = require(paths.appPackageJson).homepage;
+    let publicPath = config.output.publicPath;
     if (homepagePath && homepagePath.indexOf('.github.io/') !== -1) {
       // "homepage": "http://user.github.io/project"
       console.log('The project was built assuming it is hosted at ' + chalk.green(publicPath) + '.');
@@ -181,13 +180,13 @@ function build(previousSizeMap) {
       } else {
         // no homepage
         console.log('To override this, specify the ' + chalk.green('homepage') + ' in your '  + chalk.cyan('package.json') + '.');
-        console.log('For example, add this to build it for GitHub Pages:')
+        console.log('For example, add this to build it for GitHub Pages:');
         console.log();
         console.log('  ' + chalk.green('"homepage"') + chalk.cyan(': ') + chalk.green('"http://myname.github.io/myapp"') + chalk.cyan(','));
         console.log();
       }
       console.log('The ' + chalk.cyan('build') + ' folder is ready to be deployed.');
-      console.log('You may also serve it locally with a static server:')
+      console.log('You may also serve it locally with a static server:');
       console.log();
       console.log('  ' + chalk.cyan('npm') +  ' install -g pushstate-server');
       console.log('  ' + chalk.cyan('pushstate-server') + ' build');

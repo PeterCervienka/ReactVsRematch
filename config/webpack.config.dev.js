@@ -1,22 +1,22 @@
-var autoprefixer = require('autoprefixer');
-var webpack = require('webpack');
-var findCacheDir = require('find-cache-dir');
-var HtmlWebpackPlugin = require('html-webpack-plugin');
-var CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin');
-var InterpolateHtmlPlugin = require('react-dev-utils/InterpolateHtmlPlugin');
-var WatchMissingNodeModulesPlugin = require('react-dev-utils/WatchMissingNodeModulesPlugin');
-var getClientEnvironment = require('./env');
-var paths = require('./paths');
+let autoprefixer = require('autoprefixer');
+let webpack = require('webpack');
+let findCacheDir = require('find-cache-dir');
+let HtmlWebpackPlugin = require('html-webpack-plugin');
+let CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin');
+let InterpolateHtmlPlugin = require('react-dev-utils/InterpolateHtmlPlugin');
+let WatchMissingNodeModulesPlugin = require('react-dev-utils/WatchMissingNodeModulesPlugin');
+let getClientEnvironment = require('./env');
+let paths = require('./paths');
 
 // Webpack uses `publicPath` to determine where the app is being served from.
 // In development, we always serve from the root. This makes config easier.
-var publicPath = '/';
+let publicPath = '/';
 // `publicUrl` is just like `publicPath`, but we will provide it to our app
 // as %PUBLIC_URL% in `index.html` and `process.env.PUBLIC_URL` in JavaScript.
 // Omit trailing slash as %PUBLIC_PATH%/xyz looks better than %PUBLIC_PATH%xyz.
-var publicUrl = '';
-// Get environment variables to inject into our app.
-var env = getClientEnvironment(publicUrl);
+let publicUrl = '';
+// Get environment letiables to inject into our app.
+let env = getClientEnvironment(publicUrl);
 
 // This is the development configuration.
 // It is focused on developer experience and fast rebuilds.
@@ -156,7 +156,7 @@ module.exports = {
       inject: true,
       template: paths.appHtml,
     }),
-    // Makes some environment variables available to the JS code, for example:
+    // Makes some environment letiables available to the JS code, for example:
     // if (process.env.NODE_ENV === 'development') { ... }. See `./env.js`.
     new webpack.DefinePlugin(env),
     // This is necessary to emit hot updates (currently CSS only):
