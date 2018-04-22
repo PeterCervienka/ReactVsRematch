@@ -9,6 +9,9 @@ export default function counter(state = defaultState, action) {
     case Actions.INCREMENT:
       return { count: state.count + 1 };
 
+    case Actions.DECREMENT:
+      return { count: state.count - 1 };
+
     default:
       return state;
   }
