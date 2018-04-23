@@ -1,12 +1,8 @@
-import thunk from 'redux-thunk';
 import { init } from "@rematch/core";
 
-import { reducers } from '../reducers';
+import counter from '../models/counter';
 
 export const store = init({
-  redux: {
-    reducers: reducers,
-    middlewares: [thunk]
-  },
+  models: {counter},
 });
 
